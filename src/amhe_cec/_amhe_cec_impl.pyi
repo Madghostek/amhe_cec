@@ -1,0 +1,6 @@
+from collections.abc import Sequence
+
+
+def ackley(arg: Sequence[float], /) -> tuple[float, list[float]]: ...
+
+def init_benchmark(arg: int, /) -> None: ...
