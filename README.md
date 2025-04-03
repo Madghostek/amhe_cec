@@ -1,5 +1,26 @@
 # AMHE-CEC
 
+## Dev setup
+
+```bash
+python3 -m venv .venv
+.venv/bin/activate              # or adequate to your shell
+pip install -r requirements.txt
+pip install .                   # build and install library to site-packages (requires g++)
+```
+
+## Project structure
+```
+src/
+    cpp/            # C++ CEC functions
+    amhe_cec/       # python interface
+        __init__.py # stub to import the compiled shared library
+
+test/               # at least check if it imports and calling works
+pyproject.toml      # project description and build backend
+CMakeLists.txt      # building instructions for pip
+```
+
 ## Design choices
 
 Problem 1: We want to have CEC benchmarks with gradient
@@ -38,13 +59,3 @@ also pybind11 will give clean code, wanted for AMHE
 
 therefore I choose... nanobind, a new (2022) replacement for pybind
 
-## Project structure
-
-```
-src/
-    cpp_impl/   # C++ CEC functions
-    AMHE_CEC/   # python interface
-        __init__.py
-
-test/           # at least check if it imports and calling works
-setup.py        # tells pip to build the C stuff
