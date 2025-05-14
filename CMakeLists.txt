@@ -32,7 +32,7 @@ find_package(nanobind CONFIG REQUIRED)
 
 # amhe_cec stuff
 
-nanobind_add_module(_amhe_cec_impl STABLE_ABI src/cpp/cec2005.cpp)
+nanobind_add_module(_amhe_cec_impl STABLE_ABI src/cpp/bindings.cpp src/cpp/cec2005.cpp src/cpp/cec2005_allocate.cpp)
 
 nanobind_add_stub(
   amhe_cec_stub
