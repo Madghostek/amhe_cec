@@ -32,7 +32,7 @@ find_package(nanobind CONFIG REQUIRED)
 
 # amhe_cec stuff
 
-nanobind_add_module(_amhe_cec_impl STABLE_ABI src/cpp/bindings.cpp src/cpp/cec2005.cpp src/cpp/cec2005_allocate.cpp)
+nanobind_add_module(_amhe_cec_impl STABLE_ABI src/cpp/cec2017/cec17_test_fast_pow.cpp src/cpp/cec2005/gradients.cpp src/cpp/cec2005/rand.cpp src/cpp/cec2005/misc.cpp src/cpp/cec2005/inits.cpp src/cpp/bindings.cpp src/cpp/cec2005/basic.cpp src/cpp/cec2005/implementations.cpp src/cpp/cec2005/cec2005_allocate.cpp)
 
 nanobind_add_stub(
   amhe_cec_stub
@@ -41,6 +41,8 @@ nanobind_add_stub(
   #  MARKER_FILE py.typed
   PYTHON_PATH $<TARGET_FILE_DIR:_amhe_cec_impl>
   DEPENDS _amhe_cec_impl)
+
+add_compile_options(-Wno-unused-result)
 
 install(TARGETS _amhe_cec_impl LIBRARY DESTINATION amhe_cec)
 install(FILES ${PROJECT_BINARY_DIR}/_amhe_cec_impl.pyi DESTINATION "./amhe_cec")

@@ -3,6 +3,7 @@ import numpy as np
 
 input = np.array([0,0,0])
 
+
 def test_singleton():
     b1 = BenchmarkFactory.get("cec2005", 1, 3)
     _ = b1.evaluate(input)
@@ -18,14 +19,15 @@ def test_if_value_makes_sense():
     # assert np.allclose([0],val) # it's shifted
 
 def test_sgd():
-    dim = 3
+    dim = 2
     steps = 100
     lr = 0.1
-    b = BenchmarkFactory.get("cec2005", 1, 3)
+    b = BenchmarkFactory.get("cec2005", 3, dim)
     x = np.random.randn(dim)  # random init
      
     for _ in range(steps):
+        print(x)
         loss = b.evaluate(x)
         grad = b.gradient(x)
         x -= lr * np.array(grad)  # simple step
-        print(f"Value: {loss:.5f}")
+        print(f"Value: {loss:.5f}\n")

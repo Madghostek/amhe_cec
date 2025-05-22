@@ -7,35 +7,26 @@
 #include "benchmark_handle.h"
 #include "create_benchmark.h"
 
+
 namespace nb = nanobind;
 
 class PyBenchmark{
     BenchmarkHandle* handle;
 
     public:
-    PyBenchmark(std::string suite, int func_id, int dim) {
-        handle = create_benchmark(suite.c_str(), func_id, dim);
+    PyBenchmark(std::string suite, int func_id, int ndim) {
+        handle = create_benchmark(suite.c_str(), func_id, ndim);
     }
 
-    long double evaluate(nb::ndarray<const double> x) const {
-        std::vector<long double> x_ld(handle->dim);
-        for (int i = 0; i < handle->dim; ++i){
-            x_ld[i] = static_cast<long double>(x.data()[i]);
-        }
-        auto val = handle->evaluate(x_ld.data(), handle->dim);
+    double evaluate(nb::ndarray<double> x) const {
+        auto val = handle->evaluate(x.data());
         return val;
     }
 
-    std::vector<double> gradient(nb::ndarray<const double> x) {
-        std::vector<long double> x_ld(handle->dim);
-        std::vector<double> grad_double(handle->dim);
-        std::vector<long double> grad(handle->dim);
-        for (int i = 0; i < handle->dim; ++i)
-            x_ld[i] = static_cast<long double>(x.data()[i]);
-        handle->gradient(x_ld.data(), grad.data(), handle->dim);
-        for (int i = 0; i < handle->dim; ++i)
-            grad_double[i] = static_cast<double>(grad.data()[i]);
-        return grad_double;
+    std::vector<double> gradient(nb::ndarray<double> x) {
+        std::vector<double> grad(handle->dim);
+        handle->gradient(x.data(), grad.data());
+        return grad;
     }
 
     ~PyBenchmark() {

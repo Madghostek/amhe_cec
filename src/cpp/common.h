@@ -1,5 +1,6 @@
 #pragma once
 #include "benchmark_handle.h"
 
-using EvalFunc = long double(*)(const long double*, int);
-using GradFunc = void(*)(const long double*, long double*, int);
+using EvalFunc = double(*)(double*);
+using GradFunc = void(*)(double*, double*);
+using InitFunc = void(*)(const char* data_source);
