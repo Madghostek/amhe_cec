@@ -23,7 +23,7 @@ FILE *open_input_data(const char *extdata_dir, const char *name)
     std::cout << "[amhe cec] opening " << buf << std::endl;
     fpt = fopen(buf, "r");
     if (fpt == NULL) {
-        printf("cannot open input file for reading\n");
+        printf("cannot open input file for reading!\n");
     }
     return fpt;
 }

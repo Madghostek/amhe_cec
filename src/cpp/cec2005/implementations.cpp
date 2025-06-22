@@ -56,8 +56,7 @@ double calc_benchmark_func_f4(double *x)
 {
     double res;
     transform(x, 0);
-    basic_f[0] = calc_schwefel(trans_x);
-           // * (1.0 + 0.4 * fabs(randomnormaldeviate()));
+    basic_f[0] = calc_schwefel(trans_x)* (1.0 + 0.4 * fabs(randomnormaldeviate()));
     res = basic_f[0] + bias[0];
     return (res);
 }

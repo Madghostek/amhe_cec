@@ -18,7 +18,7 @@ def test_if_value_makes_sense():
     b = BenchmarkFactory.get("cec2005", 1, 3)
     val = b.evaluate(input)
 
-    # assert np.allclose([0],val) # it's shifted
+    assert np.allclose([0],val) # it's shifted
 
 # def test_sgd():
 #     dim = 2
@@ -38,10 +38,10 @@ def test_if_value_makes_sense():
 def test_adam():
     dim = 2
     steps = 100000
-    b = BenchmarkFactory.get("cec2005", 2, dim)
+    b = BenchmarkFactory.get("cec2005", 3, dim)
     x = torch.from_numpy(np.random.randn(dim))  # random init
 
-    print("cec2005 2 optimum at", b.evaluate(np.array([3.5626700e+001, -8.2912300e+001])))
+    #print("cec2005 2 optimum at", b.evaluate(np.array([3.5626700e+001, -8.2912300e+001])))
 
     optim = Adam([x],lr=0.1)
      
@@ -54,3 +54,10 @@ def test_adam():
             print("step",step)
             print(x)
             print(f"Value: {loss:.5f}\n")
+
+
+# def test_cec2017():
+#     b = BenchmarkFactory.get("cec2017", 1, 2)
+#     x = torch.from_numpy(np.random.randn(2))  # random init
+#     res = b.evaluate(x)
+#     print(res)

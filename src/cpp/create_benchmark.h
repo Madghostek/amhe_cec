@@ -2,6 +2,8 @@
 #include <iostream>
 #include "cec2005/cec2005.h"
 #include "benchmark_handle.h"
+#include "cec2017/cec2017.h"
+#include "string.h"
 
 extern int nfunc;
 extern int nreal;
@@ -40,6 +42,8 @@ static const BenchmarkInfo benchmark_table[] = {
     {"cec2005", 22, initialize_f22, &calc_benchmark_func_f22, &cec2005_f22_grad},
     {"cec2005", 23, initialize_f23, &calc_benchmark_func_f23, &cec2005_f23_grad},
     {"cec2005", 24, initialize_f24_f25, &calc_benchmark_func_f24_f25, &cec2005_f24_f25_grad},
+    
+    {"cec2017", 1, NULL, &calc_benchmark_func_f1_2017, &cec2005_f24_f25_grad}
 };
 
 BenchmarkHandle* create_benchmark(const char* suite, int func_id, int dim) {
@@ -57,9 +61,11 @@ BenchmarkHandle* create_benchmark(const char* suite, int func_id, int dim) {
     // this needs to be setup before calling alloc!
     nfunc = 2;
     nreal = dim;
-
-    if (!allocated) {
-        allocate_memory();
+    if (!strcmp(suite, "cec2005"))
+    {
+        if (!allocated) {
+            allocate_memory();
+        }
     }
 
 

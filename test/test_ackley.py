@@ -1,5 +1,5 @@
-import amhe_cec
-import pytest
+#import amhe_cec
+#import pytest
 
 
 # def test_ackley():

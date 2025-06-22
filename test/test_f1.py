@@ -1,4 +1,4 @@
-import amhe_cec
+#import amhe_cec
 
 # def test_f1():
 #     amhe_cec.init_benchmark(5)

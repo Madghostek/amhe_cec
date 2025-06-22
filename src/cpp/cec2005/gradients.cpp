@@ -56,100 +56,120 @@ void cec2005_f4_grad(double* x, double* gradient)
 void cec2005_f5_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f6_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f7_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f8_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f9_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f10_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f11_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f12_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f13_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f14_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f15_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f16_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f17_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f18_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f19_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f20_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f21_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f22_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f23_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
 void cec2005_f24_f25_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
+        gradient[i]=0;
     }
 }
