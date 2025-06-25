@@ -3,6 +3,36 @@
 #include <stdlib.h>
 extern int nreal;
 
+
+// gradient wrapper
+typedef void (*basic_func_grad_t)(double* z, double* grad_z);
+
+// Generic wrapper
+void evaluate_transformed_gradient(double* x, double* grad, int count, 
+                                   basic_func_grad_t basic_grad)
+{
+    int i, j, k;
+    double* grad_z = (double*)malloc(nreal * sizeof(double));
+
+    // Step 1: Apply transform → trans_x
+    transform(x, count);  // trans_x now holds z = l^T * g^T * (x - o) / lambda
+
+    // Step 2: Compute gradient in transformed space
+    basic_grad(trans_x, grad_z);  // ∇f(z)
+
+    // Step 3: Apply chain rule: grad = J * grad_z = (1/λ) * g * l * grad_z
+    for (i = 0; i < nreal; i++) {
+        grad[i] = 0.0;
+        for (j = 0; j < nreal; j++) {
+            for (k = 0; k < nreal; k++) {
+                grad[i] += (1.0 / lambda[count]) * g[i][k] * l[count][k][j] * grad_z[j];
+            }
+        }
+    }
+
+    free(grad_z);
+}
+
 void cec2005_f1_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
@@ -11,18 +41,33 @@ void cec2005_f1_grad(double* x, double* gradient)
     }
 }
 
-void cec2005_f2_grad(double* x, double* gradient)
+void cec2005_f2_grad_inner(double* x, double* grad)
 {
-    for (int k = 0; k < nreal; ++k) {
-        double ksum = 0;
-        for (int i = k; i<nreal; ++i){
-            for (int j=0;j<i;++j){
-                ksum+=x[j] - o[0][i];
-            }
-        }
-        gradient[k] = 2*ksum;
+    double *S = (double *)malloc(nreal * sizeof(double));
+
+    // Compute cumulative sums S[i] = sum_{j=0}^{i} x[j]
+    S[0] = x[0];
+    for (int i = 1; i < nreal; i++) {
+        S[i] = S[i - 1] + x[i];
     }
+
+    // Compute gradient
+    for (int i = 0; i < nreal; i++) {
+        grad[i] = 0.0;
+        for (int j = i; j < nreal; j++) {
+            grad[i] += 2.0 * S[j];
+        }
+    }
+
+    free(S);
 }
+
+void cec2005_f2_grad(double* x, double* grad)
+{
+    evaluate_transformed_gradient(x,grad,0,cec2005_f2_grad_inner);
+}
+
+
 
 void cec2005_f3_grad(double* x, double* gradient)
 {
