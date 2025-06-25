@@ -32,7 +32,22 @@ find_package(nanobind CONFIG REQUIRED)
 
 # amhe_cec stuff
 
-nanobind_add_module(_amhe_cec_impl STABLE_ABI src/cpp/cec2005/gradients.cpp src/cpp/cec2005/rand.cpp src/cpp/cec2005/misc.cpp src/cpp/cec2005/inits.cpp src/cpp/bindings.cpp src/cpp/cec2005/basic.cpp src/cpp/cec2005/implementations.cpp src/cpp/cec2005/cec2005_allocate.cpp src/cpp/cec2017/implementations.cpp src/cpp/cec2017/Compare_fast.cpp)
+nanobind_add_module(
+  _amhe_cec_impl
+  STABLE_ABI 
+  # main bindings factory
+  src/cpp/bindings.cpp 
+  # 2005
+  src/cpp/cec2005/gradients.cpp 
+  src/cpp/cec2005/rand.cpp 
+  src/cpp/cec2005/misc.cpp 
+  src/cpp/cec2005/inits.cpp 
+  src/cpp/cec2005/basic.cpp 
+  src/cpp/cec2005/implementations.cpp 
+  src/cpp/cec2005/cec2005_allocate.cpp 
+  # 2017
+  src/cpp/cec2017/implementations.cpp 
+  src/cpp/cec2017/Compare_fast.cpp)
 
 nanobind_add_stub(
   amhe_cec_stub
