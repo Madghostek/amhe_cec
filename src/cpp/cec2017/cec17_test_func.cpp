@@ -73,9 +73,15 @@ void cf_cal(double *, double *, int, double *,double *,double *,double *,int);
 extern double *OShift,*M,*y,*z,*x_bound;
 extern int ini_flag,n_flag,func_flag,*SS;
 
+extern int g_nx = 0;
+
+// this is hardcoded below to 1 as arguments...
+int r_flag = 1;
+int s_flag = 1; 
 
 void cec17_test_func(double *x, double *f, int nx, int mx,int func_num)
 {
+	g_nx = nx;
 	int cf_num=10,i,j;
 	if (ini_flag==1)
 	{

@@ -11,6 +11,10 @@ double *OShift,*M,*y,*z,*x_bound;
 int ini_flag=0,n_flag,func_flag,*SS;
 int GNVars;
 int MaxFEval = 0;
+int g_nx = -1;
+// this is hardcoded everywhere...
+int r_flag = 1;
+int s_flag = 1; 
 double fopt[1];
 
 int main()
