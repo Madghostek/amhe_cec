@@ -73,6 +73,8 @@ void cf_cal(double *, double *, int, double *,double *,double *,double *,int);
 extern double *OShift,*M,*y,*z,*x_bound;
 extern int ini_flag,n_flag,func_flag,*SS;
 
+extern int g_nx;
+
 double fast_pow(double x, int p)
 {
     double res = 1;
@@ -82,6 +84,7 @@ double fast_pow(double x, int p)
 }
 void cec17_test_func(double *x, double *f, int nx, int mx,int func_num)
 {
+	g_nx = nx;
 	int cf_num=10,i,j;
 	if (ini_flag==1)
 	{
@@ -240,6 +243,7 @@ void cec17_test_func(double *x, double *f, int nx, int mx,int func_num)
 		switch(func_num)
 		{
 		case 1:
+			printf("before call %p\n", OShift);
 			bent_cigar_func(&x[i*nx],&f[i],nx,OShift,M,1,1);
 			f[i]+=100.0;
 			break;
