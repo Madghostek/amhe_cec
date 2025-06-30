@@ -3,7 +3,8 @@ from amhe_cec.benchmark import BenchmarkFactory
 import pytest
 
 test_data = [("cec2005",1,3),
-             ("cec2005",2,3)]
+             ("cec2005",2,3),
+             ("cec2005",3,2)]
 
 def numerical_gradient(f, x, eps=1e-6):
     grad = np.zeros_like(x)

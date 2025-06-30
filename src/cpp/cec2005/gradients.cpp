@@ -4,28 +4,26 @@
 extern int nreal;
 
 
-// gradient wrapper
 typedef void (*basic_func_grad_t)(double* z, double* grad_z);
 
-// Generic wrapper
-void evaluate_transformed_gradient(double* x, double* grad, int count, 
+// only for f1-f15, because there is only one transform.
+// first caltulates gradient (on transformed coords),
+// then from chain rule adds influence of the matrices
+void evaluate_transformed_gradient(double* x, double* grad, 
                                    basic_func_grad_t basic_grad)
 {
     int i, j, k;
     double* grad_z = (double*)malloc(nreal * sizeof(double));
 
-    // Step 1: Apply transform → trans_x
-    transform(x, count);  // trans_x now holds z = l^T * g^T * (x - o) / lambda
+    transform(x, 0);
 
-    // Step 2: Compute gradient in transformed space
-    basic_grad(trans_x, grad_z);  // ∇f(z)
+    basic_grad(trans_x, grad_z); 
 
-    // Step 3: Apply chain rule: grad = J * grad_z = (1/λ) * g * l * grad_z
     for (i = 0; i < nreal; i++) {
         grad[i] = 0.0;
         for (j = 0; j < nreal; j++) {
             for (k = 0; k < nreal; k++) {
-                grad[i] += (1.0 / lambda[count]) * g[i][k] * l[count][k][j] * grad_z[j];
+                grad[i] += (1.0 / lambda[0]) * g[i][k] * l[0][k][j] * grad_z[j];
             }
         }
     }
@@ -33,6 +31,7 @@ void evaluate_transformed_gradient(double* x, double* grad, int count,
     free(grad_z);
 }
 
+// this doesn't need the wrapper
 void cec2005_f1_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
@@ -45,13 +44,11 @@ void cec2005_f2_grad_inner(double* x, double* grad)
 {
     double *S = (double *)malloc(nreal * sizeof(double));
 
-    // Compute cumulative sums S[i] = sum_{j=0}^{i} x[j]
     S[0] = x[0];
     for (int i = 1; i < nreal; i++) {
         S[i] = S[i - 1] + x[i];
     }
 
-    // Compute gradient
     for (int i = 0; i < nreal; i++) {
         grad[i] = 0.0;
         for (int j = i; j < nreal; j++) {
@@ -64,12 +61,10 @@ void cec2005_f2_grad_inner(double* x, double* grad)
 
 void cec2005_f2_grad(double* x, double* grad)
 {
-    evaluate_transformed_gradient(x,grad,0,cec2005_f2_grad_inner);
+    evaluate_transformed_gradient(x,grad,cec2005_f2_grad_inner);
 }
 
-
-
-void cec2005_f3_grad(double* x, double* gradient)
+void cec2005_f3_grad_inner(double* x, double* gradient)
 {
     for (int j = 0; j < nreal; ++j) {
         double z_j = 0.0;
@@ -84,6 +79,11 @@ void cec2005_f3_grad(double* x, double* gradient)
             gradient[i] += 2.0 * g[i][j] * scaled;
         }
     }
+}
+
+void cec2005_f3_grad(double* x, double* grad)
+{
+    evaluate_transformed_gradient(x,grad,cec2005_f3_grad_inner);
 }
 
 void cec2005_f4_grad(double* x, double* gradient)
