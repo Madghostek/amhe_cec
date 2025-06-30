@@ -17,7 +17,8 @@ test_data = [("cec2005",1,3),
              ("cec2005",10,2),
              #("cec2005",11,2) # not working!
 
-             ("cec2017",1,2)
+             ("cec2017",1,2),
+             ("cec2017",2,2)
              ]
 
 def numerical_gradient(f, x, eps=1e-6):

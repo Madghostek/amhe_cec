@@ -17,7 +17,7 @@ double calc_benchmark_func_f9_2017(double*);
 double calc_benchmark_func_f10_2017(double*);
 
 extern void cec2017_f1_grad(double*, double*);
-void cec2017_f2_grad(double*, double*);
+extern void cec2017_f2_grad(double*, double*);
 void cec2017_f3_grad(double*, double*);
 void cec2017_f4_grad(double*, double*);
 void cec2017_f5_grad(double*, double*);

@@ -243,7 +243,6 @@ void cec17_test_func(double *x, double *f, int nx, int mx,int func_num)
 		switch(func_num)
 		{
 		case 1:
-			printf("before call %p\n", OShift);
 			bent_cigar_func(&x[i*nx],&f[i],nx,OShift,M,1,1);
 			f[i]+=100.0;
 			break;

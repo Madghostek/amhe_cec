@@ -43,7 +43,8 @@ static const BenchmarkInfo benchmark_table[] = {
     {"cec2005", 23, initialize_f23, &calc_benchmark_func_f23, &cec2005_f23_grad},
     {"cec2005", 24, initialize_f24_f25, &calc_benchmark_func_f24_f25, &cec2005_f24_f25_grad},
     
-    {"cec2017", 1, NULL, &calc_benchmark_func_f1_2017, &cec2017_f1_grad}
+    {"cec2017", 1, NULL, &calc_benchmark_func_f1_2017, &cec2017_f1_grad},
+    {"cec2017", 2, NULL, &calc_benchmark_func_f2_2017, &cec2017_f2_grad}
 };
 
 BenchmarkHandle* create_benchmark(const char* suite, int func_id, int dim) {
