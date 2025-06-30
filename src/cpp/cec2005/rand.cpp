@@ -21,6 +21,11 @@ void disablerand()
     randenabled = 0;
 }
 
+void enablerand()
+{
+    randenabled = 1;
+}
+
 /* Fetch a single random number between 0.0 and 1.0 */
 double randomperc()
 {

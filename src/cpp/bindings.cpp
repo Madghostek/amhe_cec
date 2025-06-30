@@ -6,6 +6,7 @@
 #include <iostream>
 #include "benchmark_handle.h"
 #include "create_benchmark.h"
+#include "cec2005/rand.h"
 
 
 namespace nb = nanobind;
@@ -35,6 +36,8 @@ class PyBenchmark{
 };
 
 NB_MODULE(_amhe_cec_impl, m) {
+    m.def("cec2005_disablerand", disablerand);
+    m.def("cec2005_enablerand", enablerand);
     nb::class_<PyBenchmark>(m, "Benchmark")
         .def(nb::init<std::string, int, int>())
         .def("evaluate", &PyBenchmark::evaluate) // use pointers to C functions here for speed 

@@ -52,13 +52,18 @@ double calc_benchmark_func_f3(double *x)
     return (res);
 }
 
+
+// for gradient later
+// huge number to remind the user to call the main function first! this must be initialised
+double cached_noise_f4  = 1.0 /0.0;
+
+
 double calc_benchmark_func_f4(double *x)
 {
-    double res;
     transform(x, 0);
-    basic_f[0] = calc_schwefel(trans_x)* (1.0 + 0.4 * fabs(randomnormaldeviate()));
-    res = basic_f[0] + bias[0];
-    return (res);
+    cached_noise_f4 = fabs(randomnormaldeviate());  // store the randomness
+    basic_f[0] = calc_schwefel(trans_x) * (1.0 + 0.4 * cached_noise_f4);
+    return basic_f[0] + bias[0];
 }
 
 double calc_benchmark_func_f5(double *x)

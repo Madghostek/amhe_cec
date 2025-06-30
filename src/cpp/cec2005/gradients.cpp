@@ -1,6 +1,7 @@
 #include "global.h"
 #include "math.h"
 #include <stdlib.h>
+#include <stdio.h>
 extern int nreal;
 
 
@@ -23,7 +24,7 @@ void evaluate_transformed_gradient(double* x, double* grad,
         grad[i] = 0.0;
         for (j = 0; j < nreal; j++) {
             for (k = 0; k < nreal; k++) {
-                grad[i] += (1.0 / lambda[0]) * g[i][k] * l[0][k][j] * grad_z[j];
+                grad[i] += g[i][k] * l[0][k][j] * grad_z[j];
             }
         }
     }
@@ -83,21 +84,59 @@ void cec2005_f3_grad_inner(double* x, double* gradient)
 
 void cec2005_f3_grad(double* x, double* grad)
 {
-    evaluate_transformed_gradient(x,grad,cec2005_f3_grad_inner);
-}
+    for (int i = 0; i < nreal; ++i)
+        grad[i] = 0.0;
 
-void cec2005_f4_grad(double* x, double* gradient)
-{
-    for (int k = 0; k < nreal; ++k) {
-        double ksum = 0;
-        for (int i = k; i<nreal; ++i){
-            for (int j=0;j<i;++j){
-                ksum+=x[j] - o[0][i];
-            }
+    for (int j = 0; j < nreal; ++j) {
+        double z_j = 0.0;
+        for (int k = 0; k < nreal; ++k) {
+            z_j += (x[k] - o[0][k]) * g[k][j];
         }
-        gradient[k] = 2*ksum;
+
+        double lambda_j = pow(1e6, (double)j / (nreal - 1));
+        double coeff = 2.0 * lambda_j * z_j;
+
+        for (int i = 0; i < nreal; ++i) {
+            grad[i] += coeff * g[i][j];
+        }
     }
 }
+
+void schwefel_grad_inner(double* z, double* grad_z)
+{
+    // Schwefel function: sum_{i=1}^n (sum_{j=1}^i z_j)^2
+    for (int i = 0; i < nreal; ++i)
+        grad_z[i] = 0.0;
+
+    for (int i = 0; i < nreal; ++i) {
+        double partial_sum = 0.0;
+        for (int j = 0; j <= i; ++j)
+            partial_sum += z[j];
+
+        for (int j = 0; j <= i; ++j)
+            grad_z[j] += 2.0 * partial_sum;
+    }
+}
+
+extern double cached_noise_f4;
+
+void cec2005_f4_grad(double* x, double* grad)
+{
+
+    //transform(x, 0); // recompute transform because noise is ouf of sync!!!
+
+    double coeff = 1.0 + 0.4 * cached_noise_f4;
+    
+    printf("[gradient f4] cached_noise_f4 = %.10f\n", cached_noise_f4);
+
+    evaluate_transformed_gradient(x, grad, schwefel_grad_inner);
+
+    // Scale gradient by the noise coefficient
+    for (int i = 0; i < nreal; ++i)
+        grad[i] *= coeff;
+}
+
+
 void cec2005_f5_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {
