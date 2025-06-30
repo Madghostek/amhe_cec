@@ -28,6 +28,7 @@ static const BenchmarkInfo benchmark_table[] = {
     {"cec2005", 8, initialize_f8, &calc_benchmark_func_f8, &cec2005_f8_grad},
     {"cec2005", 9, initialize_f9, &calc_benchmark_func_f9, &cec2005_f9_grad},
     {"cec2005", 10, initialize_f10, &calc_benchmark_func_f10, &cec2005_f10_grad},
+    // the pollowing are not implemented / not working: 
     {"cec2005", 11, initialize_f11, &calc_benchmark_func_f11, &cec2005_f11_grad},
     {"cec2005", 12, initialize_f12, &calc_benchmark_func_f12, &cec2005_f12_grad},
     {"cec2005", 13, initialize_f13, &calc_benchmark_func_f13, &cec2005_f13_grad},
@@ -42,9 +43,18 @@ static const BenchmarkInfo benchmark_table[] = {
     {"cec2005", 22, initialize_f22, &calc_benchmark_func_f22, &cec2005_f22_grad},
     {"cec2005", 23, initialize_f23, &calc_benchmark_func_f23, &cec2005_f23_grad},
     {"cec2005", 24, initialize_f24_f25, &calc_benchmark_func_f24_f25, &cec2005_f24_f25_grad},
-    
+
+    // 2017 doesn't need inits like that
     {"cec2017", 1, NULL, &calc_benchmark_func_f1_2017, &cec2017_f1_grad},
-    {"cec2017", 2, NULL, &calc_benchmark_func_f2_2017, &cec2017_f2_grad}
+    {"cec2017", 2, NULL, &calc_benchmark_func_f2_2017, &cec2017_f2_grad},
+    {"cec2017", 3, NULL, &calc_benchmark_func_f3_2017, &cec2017_f3_grad},
+    {"cec2017", 4, NULL, &calc_benchmark_func_f4_2017, &cec2017_f4_grad},
+    {"cec2017", 5, NULL, &calc_benchmark_func_f5_2017, &cec2017_f5_grad},
+    {"cec2017", 6, NULL, &calc_benchmark_func_f6_2017, &cec2017_f6_grad},
+    {"cec2017", 7, NULL, &calc_benchmark_func_f7_2017, &cec2017_f7_grad},
+    {"cec2017", 8, NULL, &calc_benchmark_func_f8_2017, &cec2017_f8_grad},
+    {"cec2017", 9, NULL, &calc_benchmark_func_f9_2017, &cec2017_f9_grad},
+    {"cec2017", 10, NULL, &calc_benchmark_func_f10_2017, &cec2017_f10_grad}
 };
 
 BenchmarkHandle* create_benchmark(const char* suite, int func_id, int dim) {
