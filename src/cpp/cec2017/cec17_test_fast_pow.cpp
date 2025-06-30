@@ -116,11 +116,13 @@ void cec17_test_func(double *x, double *f, int nx, int mx,int func_num)
 		}
 
 		/* Load Matrix M*/
-		sprintf(FileName, "input_data/M_%d_D%d.txt", func_num,nx);
+		sprintf(FileName, "input_data/cec2017/M_%d_D%d.txt", func_num,nx);
+		printf("Opening %s\n",FileName);
 		fpt = fopen(FileName,"r");
 		if (fpt==NULL)
 		{
 		    printf("\n Error: Cannot open input file for reading \n");
+			exit(1);
 		}
 		if (func_num<20)
 		{
@@ -145,11 +147,13 @@ void cec17_test_func(double *x, double *f, int nx, int mx,int func_num)
 		fclose(fpt);
 
 		/* Load shift_data */
-		sprintf(FileName, "input_data/shift_data_%d.txt", func_num);
+		sprintf(FileName, "input_data/cec2017/shift_data_%d.txt", func_num);
+		printf("Opening %s\n",FileName);
 		fpt = fopen(FileName,"r");
 		if (fpt==NULL)
 		{
 			printf("\n Error: Cannot open input file for reading \n");
+			exit(2);
 		}
 
 		if (func_num<20)
@@ -188,7 +192,8 @@ void cec17_test_func(double *x, double *f, int nx, int mx,int func_num)
 
 		if (func_num>=11&&func_num<=20)
 		{
-			sprintf(FileName, "input_data/shuffle_data_%d_D%d.txt", func_num, nx);
+			sprintf(FileName, "input_data/cec2017/shuffle_data_%d_D%d.txt", func_num, nx);
+			printf("Opening %s\n",FileName);
 			fpt = fopen(FileName,"r");
 			if (fpt==NULL)
 			{
@@ -205,7 +210,8 @@ void cec17_test_func(double *x, double *f, int nx, int mx,int func_num)
 		}
 		else if (func_num==29||func_num==30)
 		{
-			sprintf(FileName, "input_data/shuffle_data_%d_D%d.txt", func_num, nx);
+			sprintf(FileName, "input_data/cec2017/shuffle_data_%d_D%d.txt", func_num, nx);
+			printf("Opening %s\n",FileName);
 			fpt = fopen(FileName,"r");
 			if (fpt==NULL)
 			{

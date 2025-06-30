@@ -46,7 +46,8 @@ nanobind_add_module(
   src/cpp/cec2005/implementations.cpp 
   src/cpp/cec2005/cec2005_allocate.cpp 
   # 2017
-  src/cpp/cec2017/implementations.cpp 
+  src/cpp/cec2017/implementations.cpp
+  src/cpp/cec2017/gradients.cpp 
   src/cpp/cec2017/Compare_fast.cpp)
 
 nanobind_add_stub(

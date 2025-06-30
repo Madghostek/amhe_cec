@@ -1,58 +1,59 @@
 #pragma once
 #ifndef _H_CEC2005
 #define _H_CEC2005
+#include "../common.h" // somehow this line isn't needed, C magic
 #include <vector>
 #include <limits>
 
-double calc_benchmark_func_f1(double *x);
-double calc_benchmark_func_f2(double *x);
-double calc_benchmark_func_f3(double *x);
-double calc_benchmark_func_f4(double *x);
-double calc_benchmark_func_f5(double *x);
-double calc_benchmark_func_f6(double *x);
-double calc_benchmark_func_f7(double *x);
-double calc_benchmark_func_f8(double *x);
-double calc_benchmark_func_f9(double *x);
-double calc_benchmark_func_f10(double *x);
-double calc_benchmark_func_f11(double *x);
-double calc_benchmark_func_f12(double *x);
-double calc_benchmark_func_f13(double *x);
-double calc_benchmark_func_f14(double *x);
-double calc_benchmark_func_f15(double *x);
-double calc_benchmark_func_f16(double *x);
-double calc_benchmark_func_f17(double *x);
-double calc_benchmark_func_f18(double *x);
-double calc_benchmark_func_f19(double *x);
-double calc_benchmark_func_f20(double *x);
-double calc_benchmark_func_f21(double *x);
-double calc_benchmark_func_f22(double *x);
-double calc_benchmark_func_f23(double *x);
-double calc_benchmark_func_f24_f25(double *x);
+EvalFunc calc_benchmark_func_f1;
+EvalFunc calc_benchmark_func_f2;
+EvalFunc calc_benchmark_func_f3;
+EvalFunc calc_benchmark_func_f4;
+EvalFunc calc_benchmark_func_f5;
+EvalFunc calc_benchmark_func_f6;
+EvalFunc calc_benchmark_func_f7;
+EvalFunc calc_benchmark_func_f8;
+EvalFunc calc_benchmark_func_f9;
+EvalFunc calc_benchmark_func_f10;
+EvalFunc calc_benchmark_func_f11;
+EvalFunc calc_benchmark_func_f12;
+EvalFunc calc_benchmark_func_f13;
+EvalFunc calc_benchmark_func_f14;
+EvalFunc calc_benchmark_func_f15;
+EvalFunc calc_benchmark_func_f16;
+EvalFunc calc_benchmark_func_f17;
+EvalFunc calc_benchmark_func_f18;
+EvalFunc calc_benchmark_func_f19;
+EvalFunc calc_benchmark_func_f20;
+EvalFunc calc_benchmark_func_f21;
+EvalFunc calc_benchmark_func_f22;
+EvalFunc calc_benchmark_func_f23;
+EvalFunc calc_benchmark_func_f24_f25;
 
-void cec2005_f1_grad(double* x, double* gradient);
-void cec2005_f2_grad(double* x, double* gradient);
-void cec2005_f3_grad(double* x, double* gradient);
-void cec2005_f4_grad(double* x, double* gradient);
-void cec2005_f5_grad(double* x, double* gradient);
-void cec2005_f6_grad(double* x, double* gradient);
-void cec2005_f7_grad(double* x, double* gradient);
-void cec2005_f8_grad(double* x, double* gradient);
-void cec2005_f9_grad(double* x, double* gradient);
-void cec2005_f10_grad(double* x, double* gradient);
-void cec2005_f11_grad(double* x, double* gradient);
-void cec2005_f12_grad(double* x, double* gradient);
-void cec2005_f13_grad(double* x, double* gradient);
-void cec2005_f14_grad(double* x, double* gradient);
-void cec2005_f15_grad(double* x, double* gradient);
-void cec2005_f16_grad(double* x, double* gradient);
-void cec2005_f17_grad(double* x, double* gradient);
-void cec2005_f18_grad(double* x, double* gradient);
-void cec2005_f19_grad(double* x, double* gradient);
-void cec2005_f20_grad(double* x, double* gradient);
-void cec2005_f21_grad(double* x, double* gradient);
-void cec2005_f22_grad(double* x, double* gradient);
-void cec2005_f23_grad(double* x, double* gradient);
-void cec2005_f24_f25_grad(double* x, double* gradient);
+GradFunc cec2005_f1_grad;
+GradFunc cec2005_f2_grad;
+GradFunc cec2005_f3_grad;
+GradFunc cec2005_f4_grad;
+GradFunc cec2005_f5_grad;
+GradFunc cec2005_f6_grad;
+GradFunc cec2005_f7_grad;
+GradFunc cec2005_f8_grad;
+GradFunc cec2005_f9_grad;
+GradFunc cec2005_f10_grad;
+GradFunc cec2005_f11_grad;
+GradFunc cec2005_f12_grad;
+GradFunc cec2005_f13_grad;
+GradFunc cec2005_f14_grad;
+GradFunc cec2005_f15_grad;
+GradFunc cec2005_f16_grad;
+GradFunc cec2005_f17_grad;
+GradFunc cec2005_f18_grad;
+GradFunc cec2005_f19_grad;
+GradFunc cec2005_f20_grad;
+GradFunc cec2005_f21_grad;
+GradFunc cec2005_f22_grad;
+GradFunc cec2005_f23_grad;
+GradFunc cec2005_f24_f25_grad;
 
 void initialize_f1(const char* data_path);
 void initialize_f2(const char* data_path);

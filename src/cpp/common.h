@@ -1,5 +1,4 @@
 #pragma once
-#include "benchmark_handle.h"
 
 using EvalFunc = double(*)(double*);
 using GradFunc = void(*)(double*, double*);
