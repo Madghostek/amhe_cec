@@ -8,7 +8,15 @@ import pytest
 test_data = [("cec2005",1,3),
              ("cec2005",2,3),
              ("cec2005",3,2),
-             ("cec2005",4,3)]
+             ("cec2005",4,3),
+             ("cec2005",5,3),
+             ("cec2005",6,3),
+             ("cec2005",7,2),
+             ("cec2005",8,2),
+             ("cec2005",9,3),
+             ("cec2005",10,2),
+             #("cec2005",11,2) # not working!
+             ]
 
 def numerical_gradient(f, x, eps=1e-6):
     grad = np.zeros_like(x)

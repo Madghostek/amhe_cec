@@ -24,7 +24,7 @@ void evaluate_transformed_gradient(double* x, double* grad,
         grad[i] = 0.0;
         for (j = 0; j < nreal; j++) {
             for (k = 0; k < nreal; k++) {
-                grad[i] += g[i][k] * l[0][k][j] * grad_z[j];
+                grad[i] += (1.0 / lambda[0]) * g[i][k] * l[0][k][j] * grad_z[j];
             }
         }
     }
@@ -136,49 +136,172 @@ void cec2005_f4_grad(double* x, double* grad)
         grad[i] *= coeff;
 }
 
+extern double **A_f5;
+extern double *B_f5;
 
-void cec2005_f5_grad(double* x, double* gradient)
+void cec2005_f5_grad(double* x, double* grad)
 {
-    for (int i = 0; i < nreal; ++i) {
-        gradient[i]=0;
+    int i, j;
+    double max_val = -INFINITY;
+    int i_max = -1;
+
+    // Find the index i_max where the maximum occurs
+    for (i = 0; i < nreal; ++i) {
+        double dot = 0.0;
+        for (j = 0; j < nreal; ++j) {
+            dot += A_f5[i][j] * x[j];
+        }
+        double val = fabs(dot - B_f5[i]);
+
+        if (val > max_val) {
+            max_val = val;
+            i_max = i;
+        }
+    }
+
+    // Compute the gradient w.r.t. x
+    double sign = 0.0;
+    double dot = 0.0;
+    for (j = 0; j < nreal; ++j)
+        dot += A_f5[i_max][j] * x[j];
+
+    if (dot - B_f5[i_max] > 0)
+        sign = 1.0;
+    else if (dot - B_f5[i_max] < 0)
+        sign = -1.0;
+    else
+        sign = 0.0;  // non-differentiable point — could return 0 or subgradient
+
+    for (j = 0; j < nreal; ++j)
+        grad[j] = sign * A_f5[i_max][j];
+}
+
+
+void rosenbrock_grad_inner(double* x, double* grad)
+{
+    for (int i = 0; i < nreal; ++i)
+        grad[i] = 0.0;
+
+    for (int i = 0; i < nreal - 1; ++i) {
+        double xi = x[i];
+        double xi1 = x[i + 1];
+        grad[i] += -400.0 * (xi1 - xi * xi) * xi + 2.0 * (xi - 1.0);
+        grad[i + 1] += 200.0 * (xi1 - xi * xi);
     }
 }
-void cec2005_f6_grad(double* x, double* gradient)
+
+void cec2005_f6_grad(double* x, double* grad)
 {
-    for (int i = 0; i < nreal; ++i) {
-        gradient[i]=0;
+    evaluate_transformed_gradient(x, grad, rosenbrock_grad_inner);
+}
+
+
+void griewank_grad_inner(double* x, double* grad)
+{
+    int i;
+    double sum = 0.0;
+    double prod = 1.0;
+
+    for (i = 0; i < nreal; ++i) {
+        sum += x[i] * x[i];
+        prod *= cos(x[i] / sqrt(i + 1));  // i + 1 to match 1-based index
+    }
+
+    for (i = 0; i < nreal; ++i) {
+        double xi = x[i];
+        double sqrt_i = sqrt(i + 1);  // 1-based
+        double cos_term = cos(xi / sqrt_i);
+        double sin_term = sin(xi / sqrt_i);
+
+        grad[i] = (2.0 * xi) / 4000.0 + prod * sin_term / (sqrt_i * cos_term);
     }
 }
-void cec2005_f7_grad(double* x, double* gradient)
+
+void cec2005_f7_grad(double* x, double* grad)
 {
+    evaluate_transformed_gradient(x, grad, griewank_grad_inner);
+}
+
+
+void ackley_grad_inner(double* x, double* grad)
+{
+    double sum_sq = 0.0;
+    double sum_cos = 0.0;
+    const double pi2 = 2.0 * M_PI;
+
     for (int i = 0; i < nreal; ++i) {
-        gradient[i]=0;
+        sum_sq += x[i] * x[i];
+        sum_cos += cos(pi2 * x[i]);
+    }
+
+    double inv_n = 1.0 / nreal;
+    double sqrt_sum_sq = sqrt(sum_sq * inv_n);
+    double exp1 = exp(-0.2 * sqrt_sum_sq);
+    double exp2 = exp(sum_cos * inv_n);
+
+    for (int i = 0; i < nreal; ++i) {
+        double term1 = 0.0;
+        if (sqrt_sum_sq > 1e-10) {
+            term1 = 4.0 * x[i] * exp1 / (nreal * sqrt_sum_sq);
+        }
+
+        double term2 = (2.0 * M_PI / nreal) * sin(pi2 * x[i]) * exp2;
+
+        grad[i] = term1 + term2;
     }
 }
-void cec2005_f8_grad(double* x, double* gradient)
+
+void cec2005_f8_grad(double* x, double* grad)
 {
+    evaluate_transformed_gradient(x, grad, ackley_grad_inner);
+}
+
+void rastrigin_grad_inner(double* x, double* grad)
+{
+    const double pi2 = 2.0 * M_PI;
+
     for (int i = 0; i < nreal; ++i) {
-        gradient[i]=0;
+        double xi = x[i];
+        grad[i] = 2.0 * xi + 20.0 * M_PI * sin(pi2 * xi);
     }
 }
-void cec2005_f9_grad(double* x, double* gradient)
+
+void cec2005_f9_grad(double* x, double* grad)
 {
+    evaluate_transformed_gradient(x, grad, rastrigin_grad_inner);
+}
+
+
+// same as f9?
+void cec2005_f10_grad(double* x, double* grad)
+{
+    evaluate_transformed_gradient(x, grad, rastrigin_grad_inner);
+}
+
+void weierstrass_grad_inner(double* x, double* grad)
+{
+    const double a = 0.5;
+    const double b = 3.0;
+    const int k_max = 20;
+
     for (int i = 0; i < nreal; ++i) {
-        gradient[i]=0;
+        double sum = 0.0;
+        for (int j = 0; j <= k_max; ++j) {
+            double ak = pow(a, j);
+            double bk = pow(b, j);
+            double angle = 2.0 * PI * bk * (x[i] + 0.5);
+            sum += -2.0 * PI * ak * bk * sin(angle);
+        }
+        grad[i] = sum;
     }
 }
-void cec2005_f10_grad(double* x, double* gradient)
+
+void cec2005_f11_grad(double* x, double* grad)
 {
-    for (int i = 0; i < nreal; ++i) {
-        gradient[i]=0;
-    }
+    evaluate_transformed_gradient(x, grad, weierstrass_grad_inner);
 }
-void cec2005_f11_grad(double* x, double* gradient)
-{
-    for (int i = 0; i < nreal; ++i) {
-        gradient[i]=0;
-    }
-}
+
+
 void cec2005_f12_grad(double* x, double* gradient)
 {
     for (int i = 0; i < nreal; ++i) {

@@ -132,15 +132,21 @@ double calc_benchmark_func_f10(double *x)
 
 double calc_benchmark_func_f11(double *x)
 {
-    int i;
-    double res;
-    for (i = 0; i < nreal; i++) {
-        norm_x[i] = 0.0;
-    }
     transform(x, 0);
-    basic_f[0] = calc_weierstrass(trans_x) - calc_weierstrass(norm_x);
-    res = basic_f[0] + bias[0];
-    return (res);
+    double f1 = calc_weierstrass(trans_x);
+
+    double transformed_zero[nreal];
+    for (int i = 0; i < nreal; ++i)
+        norm_x[i] = 0.0;
+
+    transform(norm_x, 0);
+    for (int i = 0; i < nreal; ++i)
+        transformed_zero[i] = trans_x[i];
+
+    double f0 = calc_weierstrass(transformed_zero);
+
+    basic_f[0] = f1 - f0;
+    return basic_f[0]+bias[0];
 }
 
 double calc_benchmark_func_f12(double *x)

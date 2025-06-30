@@ -178,6 +178,10 @@ void initialize_f7(const char *extdata_dir)
     if (nreal == 10) fpt = open_input_data(extdata_dir, "griewank_M_D10.txt");
     if (nreal == 30) fpt = open_input_data(extdata_dir, "griewank_M_D30.txt");
     if (nreal == 50) fpt = open_input_data(extdata_dir, "griewank_M_D50.txt");
+    if (fpt==NULL) {
+        std::cout << "f7 is only defined for D2, D10, D30 and D50" << std::endl;
+        exit(1);
+    }
     for (i = 0; i < nreal; i++) {
         for (j = 0; j < nreal; j++) {
             fscanf(fpt, "%lf", &g[i][j]);
@@ -204,6 +208,10 @@ void initialize_f8(const char *extdata_dir)
     if (nreal == 10) fpt = open_input_data(extdata_dir, "ackley_M_D10.txt");
     if (nreal == 30) fpt = open_input_data(extdata_dir, "ackley_M_D30.txt");
     if (nreal == 50) fpt = open_input_data(extdata_dir, "ackley_M_D50.txt");
+    if (fpt==NULL) {
+        std::cout << "f7 is only defined for D2, D10, D30 and D50" << std::endl;
+        exit(1);
+    }
     for (i = 0; i < nreal; i++) {
         for (j = 0; j < nreal; j++) {
             fscanf(fpt, "%lf", &g[i][j]);
@@ -248,6 +256,10 @@ void initialize_f10(const char *extdata_dir)
     if (nreal == 10) fpt = open_input_data(extdata_dir, "rastrigin_M_D10.txt");
     if (nreal == 30) fpt = open_input_data(extdata_dir, "rastrigin_M_D30.txt");
     if (nreal == 50) fpt = open_input_data(extdata_dir, "rastrigin_M_D50.txt");
+    if (fpt==NULL) {
+        std::cout << "f7 is only defined for D2, D10, D30 and D50" << std::endl;
+        exit(1);
+    }
     for (i = 0; i < nreal; i++) {
         for (j = 0; j < nreal; j++) {
             fscanf(fpt, "%lf", &g[i][j]);
