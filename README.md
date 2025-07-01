@@ -6,7 +6,7 @@ The package exposes a factory pattern that builds benchmark objects. Each object
 
 ```python
 
-from amhe_cec import BenchmarkFactory
+from amhe_cec.benchmark import BenchmarkFactory
 import numpy as np
 
 
@@ -23,6 +23,13 @@ See `test/test_gradient_numerical.py` for working example of comparing the gradi
 
 > [!NOTE] 
 > Usually CEC benchmarks are defined only for certain dimensions. Check the original documentations. Invalid dimentions are usually reported and the executions stops, but the original implementations are buggy and sometimes segfault instead!
+
+## Testing
+
+`test/test_gradient_numerical.py` - compare all implemented gradients with numerical gradient.
+`test/test_api.py` - simple assertion that the library doesn't produce new benchmarks with every call
+`test/test_known.py` - regression test to make sure the simplest function works
+`test/test_sgd_adam_slow.py` - gradient descent test, takes about one minute, might want to disable
 
 ## Problems
 
@@ -48,10 +55,13 @@ after changing the c++ side, run `pip install -e .` to see the changes
 ```
 src/
     cpp/            # C++ CEC functions
+        cec2005/
+        cec2017/
+        (place for more benchmarks)
     amhe_cec/       # python interface
         __init__.py # stub to import the compiled shared library
 
-test/               # at least check if it imports and calling works
+test/               # gradient comparison, also basic regression tests
 pyproject.toml      # project description and build backend
 CMakeLists.txt      # building instructions for pip
 ```
