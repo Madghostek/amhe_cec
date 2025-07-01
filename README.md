@@ -26,10 +26,10 @@ See `test/test_gradient_numerical.py` for working example of comparing the gradi
 
 ## Testing
 
-`test/test_gradient_numerical.py` - compare all implemented gradients with numerical gradient.
-`test/test_api.py` - simple assertion that the library doesn't produce new benchmarks with every call
-`test/test_known.py` - regression test to make sure the simplest function works
-`test/test_sgd_adam_slow.py` - gradient descent test, takes about one minute, might want to disable
+* `test/test_gradient_numerical.py` - compare all implemented gradients with numerical gradient.
+* `test/test_api.py` - simple assertion that the library doesn't produce new benchmarks with every call
+* `test/test_known.py` - regression test to make sure the simplest function works
+* `test/test_sgd_adam_slow.py` - gradient descent test, takes about one minute, might want to disable
 
 ## Problems
 
