@@ -1,13 +1,48 @@
 # AMHE-CEC
 
+## Usage
+
+The package exposes a factory pattern that builds benchmark objects. Each object has an `.evaluate()` and `.gradient()` method. The simplest example is as follows:
+
+```python
+
+from amhe_cec import BenchmarkFactory
+import numpy as np
+
+
+target_bench = "cec2017"
+target_func = 1
+dim = 3
+bench = BenchmarkFactory.get(target_bench, target_func, dim)
+
+value = bench.evaluate(np.array([1,2,3]))
+grad = bench.gradient(np.arrayt([1,2,3]))
+```
+
+See `test/test_gradient_numerical.py` for working example of comparing the gradient method with numerical gradient.
+
+> [!NOTE] 
+> Usually CEC benchmarks are defined only for certain dimensions. Check the original documentations. Invalid dimentions are usually reported and the executions stops, but the original implementations are buggy and sometimes segfault instead!
+
+## Problems
+
+Only a limited set of functions has it's gradients implemented:
+* cec2005 f1 through f10
+    * the composite functions require highly complicated chaining of gradients due to stacking of base functions and transformations inbetween.
+* cec2017 f1 through f10, excluding f6 and f7
+    * f10 is highly contitioned, therefore the numerical gradient differs substantially from analytical (about 0.1 relative error)
+    * composite functions also turned out very hard to implement.
+
 ## Dev setup
 
 ```bash
 python3 -m venv .venv
 .venv/bin/activate              # or adequate to your shell
 pip install -r requirements.txt
-pip install .                   # build and install library to site-packages (requires g++)
+pip install -e .                   # build and install library to site-packages (requires g++)
 ```
+
+after changing the c++ side, run `pip install -e .` to see the changes 
 
 ## Project structure
 ```
@@ -20,6 +55,15 @@ test/               # at least check if it imports and calling works
 pyproject.toml      # project description and build backend
 CMakeLists.txt      # building instructions for pip
 ```
+
+## Adding new benchmarks
+
+Currently there are first 10 functions from 2005 and 2017. To add another year, you can roughly follow these steps:
+
+1. You should place your code in the `cpp` folder with new subdirectory for organisation purposes, but it's optional
+2. Add any new source files to `CMakeLists.txt` in the root directory
+3. To expose a function to be usable through `BenchmarkFactory` on python side, add new entries in `src/cpp/create_benchmark.h`. Include necessary headers
+4. Optionally, if you need a new top-level function visible from the python package, modify `src/cpp/bindings.cpp` according to existing functions and nanobind documentation.
 
 ## Design choices
 
@@ -58,4 +102,6 @@ python C api - maybe cross platforming this wouldn't be so hard, but you need to
 also pybind11 will give clean code, wanted for AMHE
 
 therefore I choose... nanobind, a new (2022) replacement for pybind
+
+Update: After finishing work on the project, I think choosing nanobind was a really good idea, no problems whatsoever.
 
